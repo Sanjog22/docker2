@@ -6,13 +6,13 @@ pipeline {
 			}
 		}
 		stages{
-			 stage('kill') {
+			 /*stage('kill') {
 				steps {
 					sh "docker kill 22Q3"
 					sh "docker rm 22Q3"
 					sh "docker volume rm vol3-22q3"
 				}
-			} 
+			} */
 			stage('volume-3') {
 				steps {
 					sh "docker volume create vol3-22q3"

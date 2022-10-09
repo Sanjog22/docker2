@@ -1,11 +1,11 @@
-pipeline {
-		agent {
-			label { 
+pipeline{
+		agent{
+			label{ 
 				label 'built-in'
 				customWorkspace '/mnt/project/assignment1/22Q1'
 			}
 		}
-		Stages {
+		Stages{
 			/* stage('kill') {
 				steps {
 					sh "docker kill 22Q1"

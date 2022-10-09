@@ -2,22 +2,28 @@ pipeline {
 		agent{
 			label{ 
 				label'built-in'
-				customWorkspace'/mnt/assignment1/22Q1'
+				customWorkspace'/mnt/assignment2/22Q1'
 			}
 		}
 		stages{
-			  stage('kill') {
+			 stage('kill') {
 				steps {
-					sh "docker stop 22Q1"
+					sh "docker kill 22Q1"
 					sh "docker rm 22Q1"
 					
 				}
 			} 
+			stage('volume-1') {
+				steps {
+					sh "docker volume create vol1-22q1"
+					sh "cd /mnt/assignment2/22Q1 && cp index.html /var/lib/docker/volumes/vol1-22q1/_data/"
+				}
+			}
 			stage('docker-22Q1'){
 				steps{
-					sh "docker run --name 22Q1 -itdp 70:80 httpd"
-					sh "chmod -R 777 /mnt/assignment1/22Q1/index.html"
-					sh "cd /mnt/assignment1/22Q1 && docker cp index.html 22Q1:/usr/local/apache2/htdocs/"
+					sh "docker run --name 22Q1 -itdp 70:80 -v vol1-22q1:/usr/local/apache2/htdocs/ httpd"
+					sh "chmod -R 777 /var/lib/docker/volumes/vol1-22q1/_data/index.html"
+					
 				}
 				
 			
